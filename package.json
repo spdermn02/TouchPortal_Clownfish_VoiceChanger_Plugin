@@ -1,0 +1,29 @@
+{
+  "name": "touchportal_clownfish_voicechanger_plugin",
+  "version": "1.0.0",
+  "description": "Interact with Clownfish Voice Changer from TouchPortal",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin.git"
+  },
+  "keywords": [
+    "TouchPortal",
+    "Plugin"
+  ],
+  "author": "Jameson Allen aka Spdermn02",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/issues"
+  },
+  "homepage": "https://github.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin#readme",
+  "dependencies": {
+    "ref-napi": "^2.1.2",
+    "ref-struct-di": "^1.1.1",
+    "touchportal-api": "^2.1.1",
+    "win32-api": "^9.6.0"
+  }
+}
