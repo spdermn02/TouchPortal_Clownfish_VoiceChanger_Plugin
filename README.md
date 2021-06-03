@@ -1,5 +1,8 @@
 # Touch Portal Clownfish Voice Changer Plugin
 
+![Download](https://img.shields.io/github/downloads/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/total?style=plastic)
+![License](https://img.shields.io/github/license/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin?style=plastic)
+
 - [Touch Portal Clownfish Voice Changer Plugin](#touch-portal-clownfish-voice-changer-plugin)
   - [Changelog](#changelog)
   - [Description](#description)
