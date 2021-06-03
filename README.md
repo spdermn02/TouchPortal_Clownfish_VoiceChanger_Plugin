@@ -48,7 +48,7 @@ The downside is there is NO communication back from Clownfish so, it will not be
 
 ## Install
 
-1. Make sure that Clownfish is already started
+1. Make sure that Clownfish is already started (https://clownfish-translator.com/voicechanger/)
 2. Import the .tpp file into Touch Portal
 3. Click Okay and Trust Always
 4. Import the sample page if you want
