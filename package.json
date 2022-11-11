@@ -7,8 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "pkg": "pkg .",
-    "pkg-win": "pkg --targets node14-win-x64 .",
-    "build-win": "pkg --targets node14-win-x64 . && move touchportal_clownfish_voicechanger.exe base/TPClownfish/ && del Installers\\TPClownfish-Win.tpp && cd base && 7z a -tzip ../Installers/TPClownfish-Win.tpp TPClownfish"
+    "build": "node scripts/build.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +19,8 @@
   ],
   "pkg": {
     "assets": [
-    "./node_modules/ffi-napi/prebuilds/win32-x64/node.napi.uv1.node",
-    "./node_modules/ref-napi/prebuilds/win32-x64/node.napi.node"
+      "./node_modules/ffi-napi/prebuilds/win32-x64/node.napi.uv1.node",
+      "./node_modules/ref-napi/prebuilds/win32-x64/node.napi.node"
     ]
   },
   "author": "Jameson Allen aka Spdermn02",
@@ -35,5 +34,9 @@
     "ref-struct-di": "^1.1.1",
     "touchportal-api": "^2.1.1",
     "win32-api": "^9.6.0"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.5.9",
+    "pkg": "^5.8.0"
   }
 }

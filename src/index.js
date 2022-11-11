@@ -98,7 +98,7 @@ const setVoiceChanger = (tpmessage) => {
 
 const setCustomPitch = (tpmessage) => {
     let pitch = tpmessage.data[0].value;
-    if( pitch < -15.0 || pitch > 15.0 ) {
+    if( pitch < -15.0 || pitch > 30.0 ) {
         pitch = 0.0;
     }
     const message = COMMAND_LIST["Set Voice Changer"] +"|13|"+ pitch;
