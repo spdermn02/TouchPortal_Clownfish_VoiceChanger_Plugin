@@ -1,6 +1,6 @@
 {
   "name": "touchportal_clownfish_voicechanger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Interact with Clownfish Voice Changer from TouchPortal",
   "bin": "src/index.js",
   "main": "src/index.js",
