@@ -57,29 +57,22 @@ const build = async(platform) => {
     fs.rmdirSync(`./base/${platform}`)
 }
 
-const cleanInstallers  = () => {
-    try {
+const cleanInstallers  = async () => {
         dirPath = './Installers/'
         // Read the directory given in `path`
-        const files = fs.readdir(dirPath, (err, files) => {
-          if (err)
-            throw err;
-      
-          files.forEach((file) => { 
-            // Check if the file is with a PDF extension, remove it
-            if (file.split('.').pop().toLowerCase() == 'tpp') {
-              console.log(`Deleting file: ${file}`);
-              fs.unlinkSync(dirPath + file)
-            }
-          });
-        });
-      } catch (err) {
-        console.error(err);
-      }
+        const files = fs.readdirSync(dirPath);
+        for( let i = 0; i < files.length; i++ ) {
+          const file = files[i]
+          // Check if the file is with a PDF extension, remove it
+          if (file.split('.').pop().toLowerCase() == 'tpp') {
+            console.log(`Deleting file: ${file}`);
+            fs.unlinkSync(dirPath + file)
+          }
+        }
 }
 
 const executeBuilds= async () => {
-    cleanInstallers()
+    await cleanInstallers()
     await build("Windows")
     //await build("MacOS")
     //await build("Linux")
