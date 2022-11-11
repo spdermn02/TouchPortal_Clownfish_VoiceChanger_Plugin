@@ -6,6 +6,7 @@ const process = require('process');
 const Struct = require('ref-struct-di')(ref);
 const w32API = require('win32-api');
 const win32Def = require('win32-def');
+const { open } = require("out-url")
 const user32 = w32API.U.load();
 const DS = win32Def.DStruct;
 const TPClient = new (require('touchportal-api').Client)();
@@ -13,6 +14,11 @@ const pluginId = 'TouchPortal_Clownfish_VoiceChanger';
 
 const lpszClass = Buffer.from('CLOWNFISHVOICECHANGER\0','ucs2');
 const hWnd = user32.FindWindowExW(0,0,lpszClass,ref.NULL);
+
+const Constants = {
+    'releaseUrl': 'https://github.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/releases',
+    'updateUrl': 'https://raw.githubusercontent.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/main/package.json'
+}
 
 if (hWnd == undefined || hWnd == null) {
     logIt('ERROR','Could Not find Clownfish Voice Changer running');
@@ -201,6 +207,20 @@ TPClient.on("Info", (data) => {
     logIt('DEBUG','We are connected, received Info message');
 });
 
+TPClient.on("Update", (curVersion,newVersion) => {
+    TPClient.logIt("DEBUG","Update: there is an update curVersion:",curVersion,"newVersion:",newVersion)
+    TPClient.sendNotification(`${pluginId}_update_notification_${newVersion}`,`Clownfish Plugin Update Available`,
+    `\nNew Version: ${newVersion}\n\nPlease updated to get the latest bug fixes and new features\n\nCurrent Installed Version: ${curVersion}`,
+    [{id: `${pluginId}_update_notification_go_to_download`, title: "Go To Download Location" }]
+  );
+  });
+  
+  TPClient.on("NotificationClicked", (data) => {
+    if( data.optionId === `${pluginId}_update_notification_go_to_download`) {
+      open(Constants.releaseUrl);
+    }
+  });
+
 function logIt() {
     var curTime = new Date().toISOString();
     var message = [...arguments];
@@ -208,4 +228,4 @@ function logIt() {
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
 }
     
-TPClient.connect({ pluginId });
+TPClient.connect({ pluginId, updateUrl: Constants.updateUrl });
