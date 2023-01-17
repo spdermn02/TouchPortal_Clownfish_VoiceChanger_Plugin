@@ -49,25 +49,16 @@ const build = async(platform) => {
     zip.writeZip(path.normalize(`./Installers/${packageJson.name}-${platform}-${packageJson.version}.tpp`))
 
     console.log("Cleaning Up")
-    fs.unlinkSync(`./base/${platform}/entry.tp`)
-    fs.unlinkSync(`./base/${platform}/${packageJson.name}.png`)
-    fs.unlinkSync(`./base/${platform}/${execName}`)
-    fs.unlinkSync(`./base/${platform}/node.napi.uv1.node`)
-    fs.unlinkSync(`./base/${platform}/node.napi.node`)
-    fs.rmdirSync(`./base/${platform}`)
+    fs.rmSync(`./base/${platform}`, {recursive:true})
 }
 
 const cleanInstallers  = async () => {
         dirPath = './Installers/'
-        // Read the directory given in `path`
-        const files = fs.readdirSync(dirPath);
-        for( let i = 0; i < files.length; i++ ) {
-          const file = files[i]
-          // Check if the file is with a PDF extension, remove it
-          if (file.split('.').pop().toLowerCase() == 'tpp') {
-            console.log(`Deleting file: ${file}`);
-            fs.unlinkSync(dirPath + file)
-          }
+        try {
+          fs.rmSync(dirPath, { recursive : true})
+          fs.mkdirSync(dirPath)
+        } catch (err) {
+          console.error(err);
         }
 }
 

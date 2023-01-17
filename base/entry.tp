@@ -4,7 +4,7 @@
     "touchportal_clownfish_voicechanger": "1.1.0",
     "name": "Touch Portal Clownfish Voicechanger",
     "id": "TouchPortal_Clownfish_VoiceChanger",
-    "plugin_start_cmd": "\"%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger\\touchportal_clownfish_voicechanger\"",
+    "plugin_start_cmd": "\"%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger\\touchportal_clownfish_voicechanger.exe\"",
     "configuration": {
         "colorDark": "#D65E1D",
         "colorLight": "#F1864C"
@@ -14,7 +14,7 @@
         {
             "id": "clownfish_voice_changer",
             "name": "ClownFish Voice Changer",
-            "imagepath": "%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger/tp-clownfish.png",
+            "imagepath": "%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger/touchportal_clownfish_voicechanger.png",
             "actions": [
                 {
                     "id": "clownfish_play_audio",
@@ -141,6 +141,38 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "id": "clownfish_set_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Set VST",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Set VST to {$clownfish_vst_name$}",
+                    "data": [
+                        {
+                            "id": "clownfish_vst_name",
+                            "type": "text",
+                            "label": "Clownfish VST Name",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_disable_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Disable VST",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Disable VST"
+                },
+                {
+                    "id": "clownfish_configure_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Open VST Configuration",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Open VST Configuration"
                 }
             ],
             "states": [
@@ -163,7 +195,7 @@
                         "Baby Pitch",
                         "Radio",
                         "Robot",
-                        "Custom Picth",
+                        "Custom Pitch",
                         "Silence"
                     ]
                 },

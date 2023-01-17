@@ -31,9 +31,9 @@ const COMMAND_LIST = {
     "Toggle Clownfish"  : 2,
     "Set Voice Changer" : 3,
     "Set Sound FX"      : 4,
-    "Set Sound Volume"  : 5
-    /* "VST Effect"        : 6,
-    "Toggle Music"      : 7 */
+    "Set Sound Volume"  : 5,
+    "VST Effect"        : 6
+    /* "Toggle Music"      : 7 */
 };
 
 const VOICE_LIST = {
@@ -50,7 +50,7 @@ const VOICE_LIST = {
     "Baby Pitch"    :10,
     "Radio"         :11,
     "Robot"         :12,
-    "Custom Picth"  :13,
+    "Custom Pitch"  :13,
     "Silence"       :14
 };
 
@@ -107,7 +107,7 @@ const setCustomPitch = (tpmessage) => {
     if( pitch < -15.0 || pitch > 30.0 ) {
         pitch = 0.0;
     }
-    const message = COMMAND_LIST["Set Voice Changer"] +"|13|"+ pitch;
+    const message = COMMAND_LIST["Set Voice Changer"] +"|"+VOICE_LIST["Custom Pitch"]+"|"+ pitch;
     sendMessage(message);
     TPClient.stateUpdate('clownfish_voice_selected', 'Custom Pitch');
 }
@@ -141,7 +141,7 @@ const toggleClownfish = (tpmessage) => {
     sendMessage(message);
 }
 
-/* const setVST = (tpmessage) => {
+const setVST = (tpmessage) => {
     const vst = tpmessage.data[0].value;
     const message = COMMAND_LIST["VST Effect"] + "|"+ vst;
     sendMessage(message);
@@ -152,10 +152,10 @@ const setVSTOff = () => {
     sendMessage(message);
 }
 
-const resetVST = () => {
+const configVST = () => {
     const message = COMMAND_LIST["VST Effect"] + "|configure";
     sendMessage(message);
-} */
+}
 
 function sendMessage(message){
     const copyData = new Struct(DS.COPYDATASTRUCT)()
@@ -188,15 +188,15 @@ TPClient.on("Action", (message,hold) => {
         case "clownfish_set_sound_fx":
             setSoundFx(message);
             break;
-        /* case "clownfish_set_vst":
+        case "clownfish_set_vst":
             setVST(message);
             break;
-        case "clownfish_set_vst_off":
-            setVSTOff();
+        case "clownfish_disable_vst":
+            setVSTOff(message);
             break;
-        case "clownfish_reset_vst":
-            resetVST();
-            break; */
+        case "clownfish_configure_vst":
+            configVST(message);
+            break;
         default:
             logIt('WARN',`Unknown action of ${message.actionId}`);
     }
