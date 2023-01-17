@@ -6,6 +6,7 @@ const process = require('process');
 const Struct = require('ref-struct-di')(ref);
 const w32API = require('win32-api');
 const win32Def = require('win32-def');
+const { open } = require("out-url")
 const user32 = w32API.U.load();
 const DS = win32Def.DStruct;
 const TPClient = new (require('touchportal-api').Client)();
@@ -13,6 +14,11 @@ const pluginId = 'TouchPortal_Clownfish_VoiceChanger';
 
 const lpszClass = Buffer.from('CLOWNFISHVOICECHANGER\0','ucs2');
 const hWnd = user32.FindWindowExW(0,0,lpszClass,ref.NULL);
+
+const Constants = {
+    'releaseUrl': 'https://github.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/releases',
+    'updateUrl': 'https://raw.githubusercontent.com/spdermn02/TouchPortal_Clownfish_VoiceChanger_Plugin/main/package.json'
+}
 
 if (hWnd == undefined || hWnd == null) {
     logIt('ERROR','Could Not find Clownfish Voice Changer running');
@@ -25,9 +31,9 @@ const COMMAND_LIST = {
     "Toggle Clownfish"  : 2,
     "Set Voice Changer" : 3,
     "Set Sound FX"      : 4,
-    "Set Sound Volume"  : 5
-    /* "VST Effect"        : 6,
-    "Toggle Music"      : 7 */
+    "Set Sound Volume"  : 5,
+    "VST Effect"        : 6
+    /* "Toggle Music"      : 7 */
 };
 
 const VOICE_LIST = {
@@ -44,7 +50,7 @@ const VOICE_LIST = {
     "Baby Pitch"    :10,
     "Radio"         :11,
     "Robot"         :12,
-    "Custom Picth"  :13,
+    "Custom Pitch"  :13,
     "Silence"       :14
 };
 
@@ -98,10 +104,10 @@ const setVoiceChanger = (tpmessage) => {
 
 const setCustomPitch = (tpmessage) => {
     let pitch = tpmessage.data[0].value;
-    if( pitch < -15.0 || pitch > 15.0 ) {
+    if( pitch < -15.0 || pitch > 30.0 ) {
         pitch = 0.0;
     }
-    const message = COMMAND_LIST["Set Voice Changer"] +"|13|"+ pitch;
+    const message = COMMAND_LIST["Set Voice Changer"] +"|"+VOICE_LIST["Custom Pitch"]+"|"+ pitch;
     sendMessage(message);
     TPClient.stateUpdate('clownfish_voice_selected', 'Custom Pitch');
 }
@@ -135,7 +141,7 @@ const toggleClownfish = (tpmessage) => {
     sendMessage(message);
 }
 
-/* const setVST = (tpmessage) => {
+const setVST = (tpmessage) => {
     const vst = tpmessage.data[0].value;
     const message = COMMAND_LIST["VST Effect"] + "|"+ vst;
     sendMessage(message);
@@ -146,10 +152,10 @@ const setVSTOff = () => {
     sendMessage(message);
 }
 
-const resetVST = () => {
+const configVST = () => {
     const message = COMMAND_LIST["VST Effect"] + "|configure";
     sendMessage(message);
-} */
+}
 
 function sendMessage(message){
     const copyData = new Struct(DS.COPYDATASTRUCT)()
@@ -182,15 +188,15 @@ TPClient.on("Action", (message,hold) => {
         case "clownfish_set_sound_fx":
             setSoundFx(message);
             break;
-        /* case "clownfish_set_vst":
+        case "clownfish_set_vst":
             setVST(message);
             break;
-        case "clownfish_set_vst_off":
-            setVSTOff();
+        case "clownfish_disable_vst":
+            setVSTOff(message);
             break;
-        case "clownfish_reset_vst":
-            resetVST();
-            break; */
+        case "clownfish_configure_vst":
+            configVST(message);
+            break;
         default:
             logIt('WARN',`Unknown action of ${message.actionId}`);
     }
@@ -201,6 +207,20 @@ TPClient.on("Info", (data) => {
     logIt('DEBUG','We are connected, received Info message');
 });
 
+TPClient.on("Update", (curVersion,newVersion) => {
+    TPClient.logIt("DEBUG","Update: there is an update curVersion:",curVersion,"newVersion:",newVersion)
+    TPClient.sendNotification(`${pluginId}_update_notification_${newVersion}`,`Clownfish Plugin Update Available`,
+    `\nNew Version: ${newVersion}\n\nPlease updated to get the latest bug fixes and new features\n\nCurrent Installed Version: ${curVersion}`,
+    [{id: `${pluginId}_update_notification_go_to_download`, title: "Go To Download Location" }]
+  );
+  });
+  
+  TPClient.on("NotificationClicked", (data) => {
+    if( data.optionId === `${pluginId}_update_notification_go_to_download`) {
+      open(Constants.releaseUrl);
+    }
+  });
+
 function logIt() {
     var curTime = new Date().toISOString();
     var message = [...arguments];
@@ -208,4 +228,4 @@ function logIt() {
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
 }
     
-TPClient.connect({ pluginId });
+TPClient.connect({ pluginId, updateUrl: Constants.updateUrl });

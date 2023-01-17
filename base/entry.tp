@@ -1,0 +1,219 @@
+{
+    "sdk": 6,
+    "version": 1100,
+    "touchportal_clownfish_voicechanger": "1.1.0",
+    "name": "Touch Portal Clownfish Voicechanger",
+    "id": "TouchPortal_Clownfish_VoiceChanger",
+    "plugin_start_cmd": "\"%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger\\touchportal_clownfish_voicechanger.exe\"",
+    "configuration": {
+        "colorDark": "#D65E1D",
+        "colorLight": "#F1864C"
+    },
+    "settings": [],
+    "categories": [
+        {
+            "id": "clownfish_voice_changer",
+            "name": "ClownFish Voice Changer",
+            "imagepath": "%TP_PLUGIN_FOLDER%touchportal_clownfish_voicechanger/touchportal_clownfish_voicechanger.png",
+            "actions": [
+                {
+                    "id": "clownfish_play_audio",
+                    "prefix": "Clownfish:",
+                    "name": "Play Audio",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Play Audio File {$clownfish_audio_file$}",
+                    "data": [
+                        {
+                            "id": "clownfish_audio_file",
+                            "type": "file",
+                            "label": "Clownfish Audio File",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_text_to_speech",
+                    "prefix": "Clownfish:",
+                    "name": "Text To Speech",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Say {$clownfish_text_to_speech$} with Text-To-Speech",
+                    "data": [
+                        {
+                            "id": "clownfish_text_to_speech",
+                            "type": "text",
+                            "label": "Clownfish Text to Speech",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_toggle",
+                    "prefix": "Clownfish:",
+                    "name": "Enable/Disable Clownfish",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: {$clownfish_toggle$} Clownfish",
+                    "data": [
+                        {
+                            "id": "clownfish_toggle",
+                            "type": "choice",
+                            "label": "Clownfish Toggle",
+                            "default": "Enable",
+                            "valueChoices": [
+                                "Enable",
+                                "Disable"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_set_voice_changer",
+                    "prefix": "Clownfish:",
+                    "name": "Set Voice Changer",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Select {$clownfish_voice_mode$} as Voice Changer",
+                    "data": [
+                        {
+                            "id": "clownfish_voice_mode",
+                            "type": "choice",
+                            "label": "Clownfish Voice Mode",
+                            "default": "None",
+                            "valueChoices": [
+                                "None",
+                                "Alien",
+                                "Atari",
+                                "Clone",
+                                "Mutation",
+                                "Fast Mutation",
+                                "Slow Mutation",
+                                "Male Pitch",
+                                "Female Pitch",
+                                "Helium Pitch",
+                                "Baby Pitch",
+                                "Radio",
+                                "Robot",
+                                "Silence"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_set_custom_pitch",
+                    "prefix": "Clownfish:",
+                    "name": "Set Custom Pitch",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Set Custom Pitch to {$clownfish_pitch$}",
+                    "data": [
+                        {
+                            "id": "clownfish_pitch",
+                            "type": "number",
+                            "label": "Clownfish Custom Pitch",
+                            "default": "0.0",
+                            "allowDecimals": "true",
+                            "minValue": "-15.0",
+                            "maxValue": "30.0"
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_set_sound_fx",
+                    "prefix": "Clownfish:",
+                    "name": "Set Sound FX",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Select {$clownfish_sound_fx$} as Sound FX",
+                    "data": [
+                        {
+                            "id": "clownfish_sound_fx",
+                            "type": "choice",
+                            "label": "Clownfish Sound FX",
+                            "default": "None",
+                            "valueChoices": [
+                                "None",
+                                "Church",
+                                "Cave",
+                                "Choir",
+                                "Ghost"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_set_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Set VST",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Set VST to {$clownfish_vst_name$}",
+                    "data": [
+                        {
+                            "id": "clownfish_vst_name",
+                            "type": "text",
+                            "label": "Clownfish VST Name",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "id": "clownfish_disable_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Disable VST",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Disable VST"
+                },
+                {
+                    "id": "clownfish_configure_vst",
+                    "prefix": "Clownfish:",
+                    "name": "Open VST Configuration",
+                    "type": "communicate",
+                    "tryInline": "true",
+                    "format": "Clownfish: Open VST Configuration"
+                }
+            ],
+            "states": [
+                {
+                    "id": "clownfish_voice_selected",
+                    "type": "choice",
+                    "desc": "Clownfish Voice Selected",
+                    "default": "None",
+                    "valueChoices": [
+                        "None",
+                        "Alien",
+                        "Atari",
+                        "Clone",
+                        "Mutation",
+                        "Fast Mutation",
+                        "Slow Mutation",
+                        "Male Pitch",
+                        "Female Pitch",
+                        "Helium Pitch",
+                        "Baby Pitch",
+                        "Radio",
+                        "Robot",
+                        "Custom Pitch",
+                        "Silence"
+                    ]
+                },
+                {
+                    "id": "clownfish_sound_fx_selected",
+                    "type": "choice",
+                    "desc": "Clownfish Sound FX Selected",
+                    "default": "0ff",
+                    "valueChoices": [
+                        "None",
+                        "Church",
+                        "Cave",
+                        "Choir",
+                        "Ghost"
+                    ]
+                }
+            ],
+            "events": []
+        }
+    ]
+}

@@ -38,6 +38,15 @@
         - Clownfish Sound FX Selected - will be one of the following: None, Church, Cave, Choir, Ghost
     - Events
         None
+1.1.0 -
+    - Enhancements
+      - Using new Node.JS Build script for packaging the plugin
+      - Adding in VST control actions
+        - Set VST
+        - Disable VST
+        - Open VST Configuration
+    - Bug Fixes
+      - Corrected "Custom Picth" misspelling to "Custom Pitch" in the state "clownfish_voice_selected"
 ```
 
 ## Description
